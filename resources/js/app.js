@@ -10,6 +10,8 @@ import VueAxios from 'vue-axios'
 //Routes
 import { routes } from './routes';
 
+Vue.prototype.$user = window.user
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)

@@ -11,7 +11,43 @@
                             Listado de usuarios
                         </div>
                         <div class="card-body">
-                            {{ $user  }}
+                            
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <!-- <th>Type</th> -->
+                                        <th>Registered At</th>
+                                        <th>Modify</th>
+                                </tr>
+
+
+                                <tr v-for="user in users.data" :key="user.id">
+
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <!-- <td>{{user.type | upText}}</td> -->
+                                    <td>{{user.created_at | myDate}}</td>
+
+                                    <td>
+                                        <!-- <a href="#" @click="editModal(user)">
+                                            <i class="fa fa-edit blue"></i>
+                                        </a>
+                                        /
+                                        <a href="#" @click="deleteUser(user.id)">
+                                            <i class="fa fa-trash red"></i>
+                                        </a> -->
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+
                         </div>
                     </div>
                 </div> 
@@ -28,6 +64,11 @@
     export default {
         components: {
             Titulo
+        },
+        data() {
+            return {
+                users: {},
+            }
         },
         methods: {
             loadUsers(){

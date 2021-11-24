@@ -2,6 +2,7 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import moment from 'moment'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -12,6 +13,8 @@ import { routes } from './routes';
 
 Vue.prototype.$user = window.user
 
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -20,7 +23,9 @@ Vue.use(VueAxios, axios)
 export const router = new VueRouter({
     base: '/',
     mode: 'history',
-    routes
+    routes,
+    linkActiveClass: "active", // active class for non-exact links.
+    // linkExactActiveClass: "active", // active class for *exact* links.
 });
 
 /**
@@ -31,6 +36,15 @@ export const router = new VueRouter({
 
 Vue.component('app-header', require('./components/HeaderComponent.vue').default);
 Vue.component('app-footer', require('./components/FooterComponent.vue').default);
+
+
+Vue.filter('upText', function(text){
+    return text.charAt(0).toUpperCase() + text.slice(1)
+});
+
+Vue.filter('myDate',function(created){
+    return moment(created).format('DD-MM-YYYY');
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

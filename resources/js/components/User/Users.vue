@@ -115,10 +115,6 @@
 
                         </div>
                         <div class="modal-footer">
-
-                            
-
-
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
                             <!-- <button class="btn btn-primary" type="submit">Agregar</button> -->
                             <button v-show="editmode" type="submit" class="btn btn-success">Actualizar</button>
@@ -169,7 +165,7 @@
                 $('#addNew').modal('show');
             },
             loadUsers(){
-                // this.$Progress.start();
+                this.$Progress.start();
                 // if(this.$gate.isAdmin){
                     axios.get('api/user').then(({data}) => (this.users = data.data));
                 // }
@@ -179,7 +175,6 @@
                 this.$Progress.start();
                 this.form.put('api/user/'+this.form.id)
                 .then((response) => {
-                    // success
                     $('#addNew').modal('hide');
                     toast.fire({
                         icon: 'success',

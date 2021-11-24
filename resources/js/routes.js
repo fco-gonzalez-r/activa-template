@@ -1,7 +1,5 @@
-import Dashboard from './components/Dashboard.vue'
-import User from './components/User/Users.vue'
-
 export const routes = [
-    { path: '/dashboard', component: Dashboard },
-    { path: '/user', component: User },
+    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
+    { path: '/user', component: require('./components/User/Users.vue').default },
+    { path: '*', component: require('./components/NotFound.vue').default }
 ];

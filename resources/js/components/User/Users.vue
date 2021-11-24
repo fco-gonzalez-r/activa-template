@@ -176,7 +176,7 @@
                 // this.$Progress.finish();
             },
             updateUser(){
-                // this.$Progress.start();
+                this.$Progress.start();
                 this.form.put('api/user/'+this.form.id)
                 .then((response) => {
                     // success
@@ -185,7 +185,7 @@
                     //     icon: 'success',
                     //     title: response.data.message
                     // });
-                    // this.$Progress.finish();
+                    this.$Progress.finish();
                         //  Fire.$emit('AfterCreate');
                     this.getResults();
                 })
@@ -194,6 +194,7 @@
                 });
             },
             createUser() {
+                this.$Progress.start();
                 this.form.post('api/user')
                 .then((response)=>{
                     $('#addNew').modal('hide');
@@ -201,7 +202,7 @@
                     //         icon: 'success',
                     //         title: response.data.message
                     // });
-                    // this.$Progress.finish();
+                    this.$Progress.finish();
                     this.getResults();
                 })
                 .catch(()=>{

@@ -41,10 +41,10 @@
                                         <a href="#" @click="editModal(user)">
                                             <i class="fa fa-edit blue"></i>
                                         </a>
-                                        <!-- /
+                                        /
                                         <a href="#" @click="deleteUser(user.id)">
                                             <i class="fa fa-trash red"></i>
-                                        </a> -->
+                                        </a>
 
                                     </td>
                                 </tr>
@@ -181,10 +181,10 @@
                 .then((response) => {
                     // success
                     $('#addNew').modal('hide');
-                    // toast.fire({
-                    //     icon: 'success',
-                    //     title: response.data.message
-                    // });
+                    toast.fire({
+                        icon: 'success',
+                        title: response.data.message
+                    });
                     this.$Progress.finish();
                         //  Fire.$emit('AfterCreate');
                     this.getResults();
@@ -198,10 +198,10 @@
                 this.form.post('api/user')
                 .then((response)=>{
                     $('#addNew').modal('hide');
-                    // toast.fire({
-                    //         icon: 'success',
-                    //         title: response.data.message
-                    // });
+                    toast.fire({
+                            icon: 'success',
+                            title: response.data.message
+                    });
                     this.$Progress.finish();
                     this.getResults();
                 })
@@ -211,8 +211,32 @@
                         title: 'Some error occured! Please try again'
                     });
                 })
-
-
+            },
+            deleteUser(id){
+                swal.fire({
+                    title: '¿Está usted seguro?',
+                    text: "¡No podrás revertir esto!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '¡Sí, bórralo!',
+                    cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        // Send request to the server
+                         if (result.value) {
+                                this.form.delete('api/user/'+id).then(()=>{
+                                    swal.fire(
+                                        '¡Eliminado!',
+                                        'El usuario ha sido eliminado.',
+                                        'success'
+                                    );
+                                    // Fire.$emit('AfterCreate');
+                                    this.getResults();
+                                }).catch((data)=> {
+                                  swal.fire("Failed!", data.message, "warning");
+                              });
+                         }
+                    })
             },
         },
         created () {

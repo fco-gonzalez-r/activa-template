@@ -9,10 +9,13 @@
 
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>Dashboard - SB Admin</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
+		
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
+		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+		{{-- <script src="{{ mix('css/app.css') }}"></script> --}}
     </head>
     <body class="sb-nav-fixed">
 		<div id="app">

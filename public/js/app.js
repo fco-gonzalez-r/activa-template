@@ -67563,7 +67563,7 @@ var render = function () {
                       [
                         _c("i", { staticClass: "fa fa-plus-square" }),
                         _vm._v(
-                          "\n                                Agregar usuarios\n                            "
+                          "\n                                Agregar usuario\n                            "
                         ),
                       ]
                     ),

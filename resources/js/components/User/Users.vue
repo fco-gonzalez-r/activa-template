@@ -11,7 +11,7 @@
                                 
                                 <button class="btn btn-sm btn-primary " type="button" @click="newModal">
                                     <i class="fa fa-plus-square"></i>
-                                    Agregar usuarios
+                                    Agregar usuario
                                 </button>
                             </div>
                         </div>

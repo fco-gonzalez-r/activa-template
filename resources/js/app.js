@@ -69,9 +69,6 @@ export const router = new VueRouter({
  * components and automatically register them with their "basename".
  */
 
-Vue.component('app-header', require('./components/HeaderComponent.vue').default);
-Vue.component('app-footer', require('./components/FooterComponent.vue').default);
-
 
 Vue.filter('upText', function(text){
     return text.charAt(0).toUpperCase() + text.slice(1)

@@ -3,6 +3,31 @@
         <div class="container-fluid px-4">
             <titulo titulo="Usuarios"></titulo>
 
+
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-filter"></i>
+                            Filtro
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <div class="col-sm-5">
+                                    <input type="text" v-model="filter.name" class="form-control" id="inputEmail3" placeholder="Nombre">
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" @click="getResults()" class="btn btn-sm btn-primary">Filtrar</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+
+
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card mb-4">
@@ -16,8 +41,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            
-                            <table class="table table-hover">
+                            <!-- table table-responsive-sm table-sm -->
+                            <table class="table table-hover table-sm">
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
@@ -59,8 +84,6 @@
                         </div>
                     </div>
                 </div> 
-                
-                
             </div>
             
         </div>
@@ -138,6 +161,10 @@
             return {
                 editmode: false,
                 users: {},
+                filter: new Form({
+                    'name' : '',
+                    'type' : ''
+                }),
                 form: new Form({
                     id: '',
                     name: '',
@@ -148,7 +175,8 @@
         },
         methods: {
             getResults(page = 1) {
-                axios.get('api/user?page=' + page)
+                const link = 'api/user?page=' + page + '&name=' + this.filter.name;
+                axios.get(link)
                     .then(data => {
                         this.users = data.data.data;
                     });
@@ -237,6 +265,14 @@
         created () {
             this.getResults();
         },
+        watch: {
+            filter: {
+                handler: function(val, oldVal) {
+                    this.getResults(); // call it in the context of your component object
+                },
+                deep: true
+            }
+      }
     }
 </script>
 

@@ -16,7 +16,11 @@ class UserController extends BaseController
 
 
     public function index(){
-        $users = User::orderBy('name')->paginate(5);
+        $name = \request()->get('name') !== null ? \request()->get('name') : '';
+
+        $users = User::orderBy('name')
+            ->where('name', 'like', '%'. $name .'%')    
+            ->paginate(5);
         return $this->sendResponse($users, 'Users list');
     }
 

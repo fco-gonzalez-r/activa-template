@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::middleware('auth:sanctum')->namespace('App\\Http\\Controllers\\API\V1')->group(function () {
+Route::middleware('auth:api')->namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::apiResources([
         'user' => 'UserController',
     ]);

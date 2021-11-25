@@ -5693,8 +5693,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6037,6 +6035,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6047,6 +6060,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editmode: false,
       users: {},
+      roles: {},
       filter: new vform__WEBPACK_IMPORTED_MODULE_1__["default"]({
         'name': '',
         'type': ''
@@ -6055,7 +6069,8 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         name: '',
         email: '',
-        password: ''
+        password: '',
+        role: ''
       })
     };
   },
@@ -6069,11 +6084,24 @@ __webpack_require__.r(__webpack_exports__);
         _this.users = data.data.data;
       });
     },
+    getRoles: function getRoles() {
+      var _this2 = this;
+
+      var link = 'api/roles/list';
+      axios.get(link).then(function (data) {
+        _this2.roles = data.data.data;
+      });
+    },
     editModal: function editModal(user) {
       this.editmode = true;
       this.form.reset();
-      $('#addNew').modal('show');
-      this.form.fill(user);
+      $('#addNew').modal('show'); // this.form.fill(user);
+
+      this.form.id = user.id;
+      this.form.name = user.name;
+      this.form.password = '';
+      this.form.email = user.email;
+      this.form.role = user.roles[0] ? user.roles[0].name : null;
     },
     newModal: function newModal() {
       this.editmode = false;
@@ -6081,18 +6109,18 @@ __webpack_require__.r(__webpack_exports__);
       $('#addNew').modal('show');
     },
     loadUsers: function loadUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start(); // if(this.$gate.isAdmin){
 
       axios.get('api/user').then(function (_ref) {
         var data = _ref.data;
-        return _this2.users = data.data;
+        return _this3.users = data.data;
       }); // }
       // this.$Progress.finish();
     },
     updateUser: function updateUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.put('api/user/' + this.form.id).then(function (response) {
@@ -6102,16 +6130,16 @@ __webpack_require__.r(__webpack_exports__);
           title: response.data.message
         });
 
-        _this3.$Progress.finish(); //  Fire.$emit('AfterCreate');
+        _this4.$Progress.finish(); //  Fire.$emit('AfterCreate');
 
 
-        _this3.getResults();
+        _this4.getResults();
       })["catch"](function () {
-        _this3.$Progress.fail();
+        _this4.$Progress.fail();
       });
     },
     createUser: function createUser() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$Progress.start();
       this.form.post('api/user').then(function (response) {
@@ -6121,9 +6149,9 @@ __webpack_require__.r(__webpack_exports__);
           title: response.data.message
         });
 
-        _this4.$Progress.finish();
+        _this5.$Progress.finish();
 
-        _this4.getResults();
+        _this5.getResults();
       })["catch"](function () {
         toast.fire({
           icon: 'error',
@@ -6132,7 +6160,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteUser: function deleteUser(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       swal.fire({
         title: '¿Está usted seguro?',
@@ -6145,10 +6173,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this5.form["delete"]('api/user/' + id).then(function () {
+          _this6.form["delete"]('api/user/' + id).then(function () {
             swal.fire('¡Eliminado!', 'El usuario ha sido eliminado.', 'success'); // Fire.$emit('AfterCreate');
 
-            _this5.getResults();
+            _this6.getResults();
           })["catch"](function (data) {
             swal.fire("Failed!", data.message, "warning");
           });
@@ -6158,6 +6186,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getResults();
+    this.getRoles();
   },
   watch: {
     filter: {
@@ -68972,8 +69001,6 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(role.name))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(role.guard_name))]),
-                          _vm._v(" "),
                           _c(
                             "td",
                             _vm._l(role.permissions, function (permission) {
@@ -68981,7 +69008,7 @@ var render = function () {
                                 "span",
                                 {
                                   key: permission.id,
-                                  staticClass: "badge bg-success",
+                                  staticClass: "badge bg-success mx-1",
                                 },
                                 [_vm._v(_vm._s(permission.name))]
                               )
@@ -69304,9 +69331,7 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("ID")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Guard")]),
+      _c("th", { attrs: { width: "150px" } }, [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Permisos")]),
       _vm._v(" "),
@@ -69486,6 +69511,20 @@ var render = function () {
                           _c("td", [_vm._v(_vm._s(user.name))]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(user.email))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              { staticClass: "badge bg-success mx-1" },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    user.roles[0] ? user.roles[0].name : null
+                                  )
+                                ),
+                              ]
+                            ),
+                          ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(_vm._s(_vm._f("myDate")(user.created_at))),
@@ -69767,6 +69806,65 @@ var render = function () {
                           : _vm._e(),
                       ]),
                     ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "mb-3 row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 col-form-label",
+                          attrs: { for: "password" },
+                        },
+                        [_vm._v("Rol")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-10" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("type"),
+                            },
+                            attrs: { name: "type", id: "type" },
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "role",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                            },
+                          },
+                          _vm._l(_vm.roles, function (role) {
+                            return _c(
+                              "option",
+                              { key: role.id, domProps: { value: role.name } },
+                              [_vm._v(_vm._s(role.name))]
+                            )
+                          }),
+                          0
+                        ),
+                      ]),
+                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -69842,6 +69940,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Role")]),
       _vm._v(" "),
       _c("th", [_vm._v("Registered At")]),
       _vm._v(" "),

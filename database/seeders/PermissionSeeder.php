@@ -40,6 +40,7 @@ class PermissionSeeder extends Seeder
         // ]);
         // $employee->assignRole($employeeRole);
 
+
         $permiso1 = Permission::create(['name' => 'rol-listar']);
         $permiso2 = Permission::create(['name' => 'rol-crear']);
         $permiso3 = Permission::create(['name' => 'rol-editar']);
@@ -50,7 +51,12 @@ class PermissionSeeder extends Seeder
         $permiso7 = Permission::create(['name' => 'permiso-editar']);
         $permiso8 = Permission::create(['name' => 'permiso-eliminar']);
 
-        $superAdminRole->syncPermissions($permiso1, $permiso2, $permiso3, $permiso4, $permiso5, $permiso6, $permiso7, $permiso8);
+        $permiso9 = Permission::create(['name' => 'usuario-listar']);
+        $permiso10 = Permission::create(['name' => 'usuario-crear']);
+        $permiso11 = Permission::create(['name' => 'usuario-editar']);
+        $permiso12 = Permission::create(['name' => 'usuario-eliminar']);
+
+        $superAdminRole->syncPermissions($permiso1, $permiso2, $permiso3, $permiso4, $permiso5, $permiso6, $permiso7, $permiso8, $permiso9, $permiso10, $permiso11, $permiso12);
 
 
 

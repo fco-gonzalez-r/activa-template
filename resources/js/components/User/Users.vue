@@ -2,8 +2,6 @@
     <div>
         <div class="container-fluid px-4">
             <titulo titulo="Usuarios"></titulo>
-
-
             <div class="row">
                 <div class="col-xl-12">
                     <div class="card mb-4">
@@ -48,7 +46,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <!-- <th>Type</th> -->
+                                        <th>Role</th>
                                         <th>Registered At</th>
                                         <th>Modify</th>
                                 </tr>
@@ -59,10 +57,14 @@
                                     <td>{{user.id}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
-                                    <!-- <td>{{user.type | upText}}</td> -->
+                                    <td>
+                                        <!-- {{ user.roles[0] ? user.roles[0].name : null }} -->
+                                        <span class="badge bg-success mx-1">{{ user.roles[0] ? user.roles[0].name : null }}</span>
+                                    </td>
                                     <td>{{user.created_at | myDate}}</td>
 
                                     <td>
+                                        <!-- v-if="can('edit post')" -->
                                         <a href="#" @click="editModal(user)">
                                             <i class="fa fa-edit blue"></i>
                                         </a>
@@ -101,6 +103,8 @@
                         </div>
                         <div class="modal-body">
 
+                            <!-- {{ form }} -->
+                            
                             <div class="mb-3 row">
                                 <label for="name" class="col-sm-2 col-form-label">Nombre</label>
                                 <div class="col-sm-10">
@@ -123,6 +127,17 @@
                                     <input class="form-control" v-model="form.password" type="password" name="password" :class="{ 'is-invalid': form.errors.has('password') }">
                                     <div class="invalid-feedback" v-if="form.errors.has('password')" v-html="form.errors.get('password')" />
                                 </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="password" class="col-sm-2 col-form-label">Rol</label>
+                                <div class="col-sm-10">
+                                    <select name="type" v-model="form.role" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                        <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}</option>
+                                    </select>
+                                    <!-- <has-error :form="form" field="type"></has-error> -->
+                                </div>
+                                
                             </div>
 
                             <!-- <div class="mb-3 row">
@@ -161,6 +176,7 @@
             return {
                 editmode: false,
                 users: {},
+                roles: {},
                 filter: new Form({
                     'name' : '',
                     'type' : ''
@@ -170,6 +186,7 @@
                     name: '',
                     email: '',
                     password: '',
+                    role: ''
                 })
             }
         },
@@ -181,11 +198,23 @@
                         this.users = data.data.data;
                     });
             },
+            getRoles() {
+                const link = 'api/roles/list';
+                axios.get(link)
+                    .then(data => {
+                        this.roles = data.data.data;
+                    });
+            },
             editModal(user){
                 this.editmode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(user);
+                // this.form.fill(user);
+                this.form.id = user.id
+                this.form.name = user.name
+                this.form.password = ''
+                this.form.email = user.email
+                this.form.role = user.roles[0] ? user.roles[0].name : null 
             },
             newModal(){
                 this.editmode = false;
@@ -264,6 +293,7 @@
         },
         created () {
             this.getResults();
+            this.getRoles();
         },
         watch: {
             filter: {

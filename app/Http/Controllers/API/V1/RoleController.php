@@ -12,7 +12,12 @@ class RoleController extends BaseController
 {
     public function index(Request $request){
         $roles = Role::with('permissions')->orderBy('name')->paginate(10);
-        return $this->sendResponse($roles, 'Users list');
+        return $this->sendResponse($roles, 'Listado de Roles');
+    }
+
+    public function list(){
+        $roles = Role::orderBy('name')->get(['name']);
+        return $this->sendResponse($roles, 'Listado de Roles');
     }
 
     public function store(Request $request)

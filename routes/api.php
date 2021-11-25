@@ -26,6 +26,7 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
         'permissions' => 'PermissionController',
     ], ['only' => ['index', 'store', 'update', 'destroy']]);
 
+    Route::get('roles/list', 'RoleController@list');
     Route::get('permissions/list', 'PermissionController@list');
     // Route::resource('permissions', PermissionController::class)->only(['index', 'store']);
 

@@ -44,8 +44,7 @@
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Guard</th>
+                                        <th width="150px">Name</th>
                                         <th>Permisos</th>
                                         <th>Modify</th>
                                 </tr>
@@ -55,9 +54,8 @@
 
                                     <td>{{role.id}}</td>
                                     <td>{{role.name}}</td>
-                                    <td>{{role.guard_name}}</td>
                                     <td>
-                                        <span v-for="permission in role.permissions" :key="permission.id" class="badge bg-success">{{ permission.name }}</span>
+                                        <span v-for="permission in role.permissions" :key="permission.id" class="badge bg-success mx-1">{{ permission.name }}</span>
                                     </td>
 
                                     <td>

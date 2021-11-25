@@ -16,6 +16,13 @@
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 		{{-- <script src="{{ mix('css/app.css') }}"></script> --}}
+		<script type="text/javascript">
+			window.Laravel = {
+				csrfToken: "{{ csrf_token() }}",
+				jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():0 !!}
+			}
+		</script>
+		
     </head>
     <body class="sb-nav-fixed">
 		<div id="app">

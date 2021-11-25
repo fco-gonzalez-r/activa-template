@@ -12,7 +12,19 @@
                             Dashboard
                         </div>
                         <div class="card-body">
-                            {{ $user  }}
+                            <!-- {{ $user  }} -->
+
+                            <div v-if="is('Super-Admin')">
+                                Eres Super Admin
+                            </div>
+                            <div v-else>No eres super-Admin</div>
+
+                            <div v-if="can('permiso-create')">
+                                puedes permiso-create
+                            </div>
+                            <div v-else> no puedes permiso-create </div>
+
+
                         </div>
                     </div>
                 </div> 

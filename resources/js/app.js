@@ -54,6 +54,9 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
+import LaravelPermissionToVueJS from 'laravel-permission-to-vuejs'
+Vue.use(LaravelPermissionToVueJS)
+
 //Register Routes
 export const router = new VueRouter({
   base: '/',

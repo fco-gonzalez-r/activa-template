@@ -5243,6 +5243,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -6182,6 +6194,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var laravel_permission_to_vuejs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! laravel-permission-to-vuejs */ "./node_modules/laravel-permission-to-vuejs/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
@@ -6225,7 +6238,9 @@ Vue.prototype.$user = window.user;
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]);
 Vue.use(vuex__WEBPACK_IMPORTED_MODULE_7__["default"]);
-Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_2__["default"], (axios__WEBPACK_IMPORTED_MODULE_1___default())); //Register Routes
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_2__["default"], (axios__WEBPACK_IMPORTED_MODULE_1___default()));
+
+Vue.use(laravel_permission_to_vuejs__WEBPACK_IMPORTED_MODULE_8__["default"]); //Register Routes
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
   base: '/',
@@ -22249,6 +22264,73 @@ if ( typeof noGlobal === "undefined" ) {
 return jQuery;
 } );
 
+
+/***/ }),
+
+/***/ "./node_modules/laravel-permission-to-vuejs/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/laravel-permission-to-vuejs/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+	install(Vue, options) {
+		Vue.prototype.can = function(value){
+			var permissions = window.Laravel.jsPermissions.permissions;
+			var _return = false;
+			if(!Array.isArray(permissions)){
+				return false;
+			}
+			if(value.includes('|')){
+				value.split('|').forEach(function (item) {
+					if(permissions.includes(item.trim())){
+						_return = true;
+					}
+				});
+			}else if(value.includes('&')){
+				_return = true;
+				value.split('&').forEach(function (item) {
+					if(!permissions.includes(item.trim())){
+						_return = false;
+					}
+				});
+			}else{
+				_return = permissions.includes(value.trim());
+			}
+			return _return;
+		}
+		
+		Vue.prototype.is = function(value){
+			var roles = window.Laravel.jsPermissions.roles;
+			var _return = false;
+			if(!Array.isArray(roles)){
+				return false;
+			}
+			if(value.includes('|')){
+				value.split('|').forEach(function (item) {
+					if(roles.includes(item.trim())){
+						_return = true;
+					}
+				});
+			}else if(value.includes('&')){
+				_return = true;
+				value.split('&').forEach(function (item) {
+					if(!roles.includes(item.trim())){
+						_return = false;
+					}
+				});
+			}else{
+				_return = roles.includes(value.trim());
+			}
+			return _return;
+		}
+	}
+});
 
 /***/ }),
 
@@ -68045,11 +68127,21 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.$user) +
-                    "\n                    "
-                ),
+                _vm.is("Super-Admin")
+                  ? _c("div", [
+                      _vm._v(
+                        "\n                            Eres Super Admin\n                        "
+                      ),
+                    ])
+                  : _c("div", [_vm._v("No eres super-Admin")]),
+                _vm._v(" "),
+                _vm.can("permiso-create")
+                  ? _c("div", [
+                      _vm._v(
+                        "\n                            puedes permiso-create\n                        "
+                      ),
+                    ])
+                  : _c("div", [_vm._v(" no puedes permiso-create ")]),
               ]),
             ]),
           ]),

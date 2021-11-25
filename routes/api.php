@@ -22,5 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::apiResources([
         'user' => 'UserController',
+        'roles' => 'RoleController',
     ]);
+
+    Route::resource('permissions', PermissionController::class)->only(['index']);
+
 });

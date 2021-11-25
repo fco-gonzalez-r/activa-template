@@ -12,16 +12,16 @@ import Swal from 'sweetalert2'
 window.swal = Swal;
 
 const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 window.toast = Toast;
 
@@ -56,11 +56,11 @@ Vue.use(VueAxios, axios)
 
 //Register Routes
 export const router = new VueRouter({
-    base: '/',
-    mode: 'history',
-    routes,
-    linkActiveClass: "active", // active class for non-exact links.
-    // linkExactActiveClass: "active", // active class for *exact* links.
+  base: '/',
+  mode: 'history',
+  routes,
+  linkActiveClass: "active", // active class for non-exact links.
+  // linkExactActiveClass: "active", // active class for *exact* links.
 });
 
 /**

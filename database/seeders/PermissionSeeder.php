@@ -18,48 +18,48 @@ class PermissionSeeder extends Seeder
     {
         $superAdminRole = Role::create(['name' => 'Super-Admin']);
         $superAdmin = User::factory()->create([
-            'name' => 'superadmin',
-            'email' => 'superadmin@mail.com',
+            'name' => 'Francisco González',
+            'email' => 'francisco@epulso.cl',
             'password' => bcrypt("password")
         ]);
         $superAdmin->assignRole($superAdminRole);
 
-        $managerRole = Role::create(['name' => 'Manager']);
-        $manager = User::factory()->create([
-            'name' => 'manager',
-            'email' => 'manager@mail.com',
-            'password' => bcrypt("password")
-        ]);
-        $manager->assignRole($managerRole);
+        // $managerRole = Role::create(['name' => 'Manager']);
+        // $manager = User::factory()->create([
+        //     'name' => 'manager',
+        //     'email' => 'manager@mail.com',
+        //     'password' => bcrypt("password")
+        // ]);
+        // $manager->assignRole($managerRole);
 
-        $employeeRole = Role::create(['name' => 'Employe']);
-        $employee = User::factory()->create([
-            'name' => 'employee',
-            'email' => 'employee@mail.com',
-            'password' => bcrypt("password")
-        ]);
-        $employee->assignRole($employeeRole);
+        // $employeeRole = Role::create(['name' => 'Employe']);
+        // $employee = User::factory()->create([
+        //     'name' => 'employee',
+        //     'email' => 'employee@mail.com',
+        //     'password' => bcrypt("password")
+        // ]);
+        // $employee->assignRole($employeeRole);
 
-        Permission::create(['name' => 'list programs']);
-        Permission::create(['name' => 'create programs']);
-        Permission::create(['name' => 'show programs']);
-        Permission::create(['name' => 'update programs']);
-        Permission::create(['name' => 'delete programs']);
+        Permission::create(['name' => 'rol-list']);
+        Permission::create(['name' => 'rol-create']);
+        Permission::create(['name' => 'rol-edit']);
+        Permission::create(['name' => 'rol-delete']);
 
-        Permission::create(['name' => 'show own programs']);
-        Permission::create(['name' => 'update own programs']);
-        Permission::create(['name' => 'delete own programs']);
-        Permission::create(['name' => 'restore own programs']);
+        Permission::create(['name' => 'permiso-list']);
+        Permission::create(['name' => 'permiso-create']);
+        Permission::create(['name' => 'permiso-edit']);
+        Permission::create(['name' => 'permiso-delete']);
 
 
-        $manager->givePermissionTo([
-            'list programs', 'create programs', 'show programs', 'update programs', 'delete own programs'
-        ]);
 
-        $employee->givePermissionTo([
-            'list programs', 'create programs', 'show own programs', 'update own programs',
-            'delete own programs', 'restore own programs'
-        ]);
+        // $superAdminRole->givePermissionTo([
+        //     'list programs', 'create programs', 'show programs', 'update programs', 'delete own programs'
+        // ]);
+
+        // $employee->givePermissionTo([
+        //     'list programs', 'create programs', 'show own programs', 'update own programs',
+        //     'delete own programs', 'restore own programs'
+        // ]);
 
 
         

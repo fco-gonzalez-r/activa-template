@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="container-fluid px-4">
-            <titulo titulo="Roles"></titulo>
+            <titulo titulo="Permisos"></titulo>
 
 
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-xl-12">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -24,7 +24,7 @@
                         </div>
                     </div>
                 </div> 
-            </div> -->
+            </div>
 
             <div class="row">
                 <div class="col-xl-12">
@@ -34,7 +34,7 @@
                                 
                                 <button class="btn btn-sm btn-primary " type="button" @click="newModal">
                                     <i class="fa fa-plus-square"></i>
-                                    Nuevo Rol
+                                    Nuevo Permiso
                                 </button>
                             </div>
                         </div>
@@ -45,27 +45,25 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Guard</th>
-                                        <th>Permisos</th>
                                         <th>Modify</th>
                                 </tr>
 
 
-                                <tr v-for="role in roles.data" :key="role.id">
+                                <tr v-for="permission in permissions.data" :key="permission.id">
 
-                                    <td>{{role.id}}</td>
-                                    <td>{{role.name}}</td>
-                                    <td>{{role.guard_name}}</td>
+                                    <td>{{permission.id}}</td>
+                                    <td>{{permission.name}}</td>
+                                    <td>{{permission.guard_name}}</td>
                                     <td>
-                                        <span v-for="permission in role.permissions" :key="permission.id" class="badge bg-success">{{ permission.name }}</span>
+                                        <span v-for="permission in permission.permissions" :key="permission.id" class="badge bg-success">{{ permission.name }}</span>
                                     </td>
 
                                     <td>
-                                        <a href="#" @click="editModal(role)">
+                                        <a href="#" @click="editModal(permission)">
                                             <i class="fa fa-edit blue"></i>
                                         </a>
                                         /
-                                        <a href="#" @click="deleteRole(role.id)">
+                                        <a href="#" @click="deleteRole(permission.id)">
                                             <i class="fa fa-trash red"></i>
                                         </a>
 
@@ -78,7 +76,7 @@
 
                         </div>
                         <div class="card-footer">
-                            <pagination :data="users" @pagination-change-page="getResults"></pagination>
+                            <pagination :data="permissions" @pagination-change-page="getResults"></pagination>
                         </div>
                     </div>
                 </div> 
@@ -90,7 +88,7 @@
         <div  class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewTitle" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                 <div class="modal-content">
-                    <form @submit.prevent="editmode ? updateUser() : createRole()" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="editmode ? updateUser() : createPermssion()" @keydown="form.onKeydown($event)">
                         
                         <div class="modal-header">
                             <h5 class="modal-title" v-show="!editmode">Crea nuevo Usuario</h5>
@@ -106,17 +104,6 @@
                                     <div class="invalid-feedback" v-if="form.errors.has('name')" v-html="form.errors.get('name')" />
                                 </div>
                             </div>
-
-                            <div class="mb-3 row">
-                                <label for="name" class="col-sm-2 col-form-label">Permisos</label>
-                            </div>
-                            <div class="row">
-                                <div v-for="permission in permissions" :key="permission.id" class="col-sm-3">
-                                    <input class="form-check-input" v-model="form.permission" type="checkbox" :value="permission.id" :id="permission.id">
-                                    <label class="form-check-label" for="flexCheckDefault">{{ permission.name }}</label>
-                                </div>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
@@ -142,7 +129,6 @@
             return {
                 editmode: false,
                 users: {},
-                roles: {},
                 permissions: {},
                 filter: new Form({
                     'name' : '',
@@ -151,26 +137,21 @@
                 form: new Form({
                     id: '',
                     name: '',
-                    permission: []
                 })
             }
         },
         methods: {
             getResults(page = 1) {
-                const link = 'api/roles?page=' + page + '&name=' + this.filter.name;
+                const link = 'api/permissions?page=' + page + '&name=' + this.filter.name;
                 axios.get(link)
                     .then(data => {
-                        this.roles = data.data.data;
+                        this.permissions = data.data.data;
                     });
             },
             editModal(role){
                 this.editmode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                const permissions = role.permissions.map(function(element) { 
-                    return element.id; 
-                })
-                role.permission = permissions;
                 this.form.fill(role);
             },
             newModal(){
@@ -178,16 +159,9 @@
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            loadPersmissions(){
-                this.$Progress.start();
-                // if(this.$gate.isAdmin){
-                    axios.get('api/permissions/list').then(({data}) => (this.permissions = data.data));
-                // }
-                this.$Progress.finish();
-            },
             updateUser(){
                 this.$Progress.start();
-                this.form.put('api/roles/'+this.form.id)
+                this.form.put('api/permissions/'+this.form.id)
                 .then((response) => {
                     $('#addNew').modal('hide');
                     toast.fire({
@@ -202,9 +176,9 @@
                     this.$Progress.fail();
                 });
             },
-            createRole() {
+            createPermssion() {
                 this.$Progress.start();
-                this.form.post('api/roles')
+                this.form.post('api/permissions')
                 .then((response)=>{
                     $('#addNew').modal('hide');
                     toast.fire({
@@ -233,7 +207,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete('api/roles/'+id).then(()=>{
+                                this.form.delete('api/permissions/'+id).then(()=>{
                                     swal.fire(
                                         '¡Eliminado!',
                                         'El usuario ha sido eliminado.',
@@ -250,7 +224,6 @@
         },
         created () {
             this.getResults();
-            this.loadPersmissions();
         },
         watch: {
             filter: {

@@ -2,7 +2,7 @@
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
         <div class="sb-sidenav-menu">
             <div class="nav">
-                <div class="sb-sidenav-menu-heading">Core</div>
+                {{-- <div class="sb-sidenav-menu-heading">Core</div> --}}
                 <router-link to="/dashboard" class="nav-link">
                     <p>
                         Dashboard
@@ -23,6 +23,9 @@
                         </router-link>
                         <router-link to="/roles" class="nav-link">
                             Roles
+                        </router-link>
+                        <router-link to="/permissions" class="nav-link">
+                            Permisos
                         </router-link>
                     </nav>
                 </div>

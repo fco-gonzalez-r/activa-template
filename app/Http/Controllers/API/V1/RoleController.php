@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Permission;
 class RoleController extends BaseController
 {
     public function index(Request $request){
-        $roles = Role::with('permissions')->orderBy('id','DESC')->paginate(10);
+        $roles = Role::with('permissions')->orderBy('name')->paginate(10);
         return $this->sendResponse($roles, 'Users list');
     }
 
@@ -26,6 +26,11 @@ class RoleController extends BaseController
         $role->syncPermissions($request->input('permission'));
     
         return $this->sendResponse($role, 'Rol creado satisfactoriamente');
+    }
+
+    public function show($id)
+    {
+
     }
 
     public function update(Request $request, $id)

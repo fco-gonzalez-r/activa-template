@@ -23,8 +23,10 @@ Route::namespace('App\\Http\\Controllers\\API\V1')->group(function () {
     Route::apiResources([
         'user' => 'UserController',
         'roles' => 'RoleController',
-    ]);
+        'permissions' => 'PermissionController',
+    ], ['only' => ['index', 'store', 'update', 'destroy']]);
 
-    Route::resource('permissions', PermissionController::class)->only(['index']);
+    Route::get('permissions/list', 'PermissionController@list');
+    // Route::resource('permissions', PermissionController::class)->only(['index', 'store']);
 
 });

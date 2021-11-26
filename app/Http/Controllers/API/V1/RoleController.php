@@ -16,7 +16,7 @@ class RoleController extends BaseController
     }
 
     public function list(){
-        $roles = Role::orderBy('name')->get(['name']);
+        $roles = Role::pluck('name','name')->all();
         return $this->sendResponse($roles, 'Listado de Roles');
     }
 
@@ -27,7 +27,7 @@ class RoleController extends BaseController
             'permission' => 'required',
         ]);
     
-        $role = Role::create(['name' => $request->input('name')]);
+        $role = Role::create(['guard_name' => 'web', 'name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
     
         return $this->sendResponse($role, 'Rol creado satisfactoriamente');

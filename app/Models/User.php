@@ -16,6 +16,7 @@ class User extends Authenticatable
     use HasRoles;
     use LaravelPermissionToVueJS;
 
+    protected $guard_name = 'web';
     protected $with = ['roles', 'permissions'];
 
     /**

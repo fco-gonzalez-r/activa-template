@@ -133,7 +133,7 @@
                                 <label for="password" class="col-sm-2 col-form-label">Rol</label>
                                 <div class="col-sm-10">
                                     <select name="type" v-model="form.role" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
-                                        <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}</option>
+                                        <option v-for="(item, index) in roles" :key="index" :value="index">{{ item }}</option>
                                     </select>
                                     <!-- <has-error :form="form" field="type"></has-error> -->
                                 </div>

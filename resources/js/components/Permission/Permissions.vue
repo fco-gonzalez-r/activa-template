@@ -5,7 +5,7 @@
 
 
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-8">
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-filter"></i>
@@ -13,10 +13,10 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-11">
                                     <input type="text" v-model="filter.name" class="form-control" id="inputEmail3" placeholder="Nombre">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-1">
                                     <button type="button" @click="getResults()" class="btn btn-sm btn-primary">Filtrar</button>
                                 </div>
                             </div>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="row">
-                <div class="col-xl-12">
+                <div class="col-xl-8">
                     <div class="card mb-4">
                         <div class="card-header">
                             <div class="card-tools d-flex justify-content-end">
@@ -44,8 +44,8 @@
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Modify</th>
+                                        <th>Nombre</th>
+                                        <th width="10px" >Acciones</th>
                                 </tr>
 
 
@@ -53,11 +53,6 @@
 
                                     <td>{{permission.id}}</td>
                                     <td>{{permission.name}}</td>
-                                    <td>{{permission.guard_name}}</td>
-                                    <td>
-                                        <span v-for="permission in permission.permissions" :key="permission.id" class="badge bg-success">{{ permission.name }}</span>
-                                    </td>
-
                                     <td>
                                         <a href="#" @click="editModal(permission)">
                                             <i class="fa fa-edit blue"></i>

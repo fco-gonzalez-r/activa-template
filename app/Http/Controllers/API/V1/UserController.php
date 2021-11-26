@@ -39,7 +39,7 @@ class UserController extends BaseController
 
     public function update(UserRequest $request, User $user)
     {
-        // dd($request->input('role'));
+
         if (!empty($request->password)) {
             $request->merge(['password' => Hash::make($request['password'])]);
         }
@@ -50,6 +50,7 @@ class UserController extends BaseController
         $user->update($request->all());
         DB::table('model_has_roles')->where('model_id', $user->id)->delete();
         $user->assignRole($request->input('role'));
+        // $user->assignRole();
 
         return $this->sendResponse($user, 'User Information has been updated');
     }

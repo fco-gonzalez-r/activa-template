@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $superAdminRole = Role::create(['name' => 'Super-Admin']);
+        $superAdminRole = Role::create(['guard_name' => 'web', 'name' => 'Super-Admin']);
         $superAdmin = User::factory()->create([
             'name' => 'Francisco González',
             'email' => 'francisco@epulso.cl',

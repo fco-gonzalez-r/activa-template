@@ -5422,11 +5422,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -68563,13 +68558,13 @@ var render = function () {
         _c("titulo", { attrs: { titulo: "Permisos" } }),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-12" }, [
+          _c("div", { staticClass: "col-xl-8" }, [
             _c("div", { staticClass: "card mb-4" }, [
               _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-sm-5" }, [
+                  _c("div", { staticClass: "col-sm-11" }, [
                     _c("input", {
                       directives: [
                         {
@@ -68597,7 +68592,7 @@ var render = function () {
                     }),
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-2" }, [
+                  _c("div", { staticClass: "col-sm-1" }, [
                     _c(
                       "button",
                       {
@@ -68619,7 +68614,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xl-12" }, [
+          _c("div", { staticClass: "col-xl-8" }, [
             _c("div", { staticClass: "card mb-4" }, [
               _c("div", { staticClass: "card-header" }, [
                 _c(
@@ -68656,26 +68651,6 @@ var render = function () {
                           _c("td", [_vm._v(_vm._s(permission.id))]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(permission.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(permission.guard_name))]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            _vm._l(
-                              permission.permissions,
-                              function (permission) {
-                                return _c(
-                                  "span",
-                                  {
-                                    key: permission.id,
-                                    staticClass: "badge bg-success",
-                                  },
-                                  [_vm._v(_vm._s(permission.name))]
-                                )
-                              }
-                            ),
-                            0
-                          ),
                           _vm._v(" "),
                           _c("td", [
                             _c(
@@ -68927,9 +68902,9 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("ID")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Name")]),
+      _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Modify")]),
+      _c("th", { attrs: { width: "10px" } }, [_vm._v("Acciones")]),
     ])
   },
 ]
@@ -69854,11 +69829,11 @@ var render = function () {
                               },
                             },
                           },
-                          _vm._l(_vm.roles, function (role) {
+                          _vm._l(_vm.roles, function (item, index) {
                             return _c(
                               "option",
-                              { key: role.id, domProps: { value: role.name } },
-                              [_vm._v(_vm._s(role.name))]
+                              { key: index, domProps: { value: index } },
+                              [_vm._v(_vm._s(item))]
                             )
                           }),
                           0

@@ -11,10 +11,15 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <input type="text" v-model="filter.name" class="form-control" id="inputEmail3" placeholder="Nombre">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-5">
+                                    <select name="role" v-model="filter.role" id="role" class="form-control" placeholder="Rol">
+                                        <option v-for="(item, index) in roles" :key="index" :value="index">{{ item }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1">
                                     <button type="button" @click="getResults()" class="btn btn-sm btn-primary">Filtrar</button>
                                 </div>
                             </div>
@@ -44,11 +49,11 @@
                                 <tbody>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Registered At</th>
-                                        <th>Modify</th>
+                                        <th>Nombre</th>
+                                        <th>Mail</th>
+                                        <th>Rol</th>
+                                        <th>Registrado</th>
+                                        <th width="10px">Acciones</th>
                                 </tr>
 
 
@@ -130,12 +135,15 @@
                             </div>
 
                             <div class="mb-3 row">
-                                <label for="password" class="col-sm-2 col-form-label">Rol</label>
+                                <label for="role" class="col-sm-2 col-form-label">Rol</label>
                                 <div class="col-sm-10">
-                                    <select name="type" v-model="form.role" id="type" class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
+                                    <select name="role" v-model="form.role" id="role" class="form-control" :class="{ 'is-invalid': form.errors.has('role') }">
                                         <option v-for="(item, index) in roles" :key="index" :value="index">{{ item }}</option>
                                     </select>
-                                    <!-- <has-error :form="form" field="type"></has-error> -->
+                                    <div class="invalid-feedback" v-if="form.errors.has('role')" v-html="form.errors.get('role')" />
+
+                                    <!-- <input class="form-control" v-model="form.name" type="text" name="name" :class="{ 'is-invalid': form.errors.has('name') }">
+                                    <div class="invalid-feedback" v-if="form.errors.has('name')" v-html="form.errors.get('name')" /> -->
                                 </div>
                                 
                             </div>
@@ -153,7 +161,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
+                            <button @click="resetForm()" class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cerrar</button>
                             <!-- <button class="btn btn-primary" type="submit">Agregar</button> -->
                             <button v-show="editmode" type="submit" class="btn btn-success">Actualizar</button>
                             <button v-show="!editmode" type="submit" class="btn btn-primary">Crear</button>    
@@ -179,7 +187,7 @@
                 roles: {},
                 filter: new Form({
                     'name' : '',
-                    'type' : ''
+                    'role' : ''
                 }),
                 form: new Form({
                     id: '',
@@ -192,11 +200,15 @@
         },
         methods: {
             getResults(page = 1) {
-                const link = 'api/user?page=' + page + '&name=' + this.filter.name;
+                const link = 'api/user?page=' + page + '&name=' + this.filter.name + '&rol=' + this.filter.role;
                 axios.get(link)
                     .then(data => {
                         this.users = data.data.data;
                     });
+            },
+            resetForm(){
+                console.log("reset");
+                this.form.reset();
             },
             getRoles() {
                 const link = 'api/roles/list';

@@ -41,7 +41,8 @@ class UserRequest extends FormRequest
             // 'type' => 'required|in:admin,user',
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:6'
+            'password' => 'required|string|min:6',
+            'role' => 'required',
         ];
     }
 
@@ -55,7 +56,8 @@ class UserRequest extends FormRequest
         return [
             // 'type' => 'sometimes|in:admin,user',
             'name' => 'sometimes|string|max:191',
-            'email' => 'sometimes|string|email|max:191|unique:users,email,' . $this->get('id')
+            'email' => 'sometimes|string|email|max:191|unique:users,email,' . $this->get('id'),
+            'role' => 'required',
         ];
     }
 }

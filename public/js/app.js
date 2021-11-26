@@ -6045,6 +6045,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6058,7 +6066,7 @@ __webpack_require__.r(__webpack_exports__);
       roles: {},
       filter: new vform__WEBPACK_IMPORTED_MODULE_1__["default"]({
         'name': '',
-        'type': ''
+        'role': ''
       }),
       form: new vform__WEBPACK_IMPORTED_MODULE_1__["default"]({
         id: '',
@@ -6074,10 +6082,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      var link = 'api/user?page=' + page + '&name=' + this.filter.name;
+      var link = 'api/user?page=' + page + '&name=' + this.filter.name + '&rol=' + this.filter.role;
       axios.get(link).then(function (data) {
         _this.users = data.data.data;
       });
+    },
+    resetForm: function resetForm() {
+      console.log("reset");
+      this.form.reset();
     },
     getRoles: function getRoles() {
       var _this2 = this;
@@ -69397,7 +69409,7 @@ var render = function () {
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-sm-5" }, [
+                  _c("div", { staticClass: "col-sm-6" }, [
                     _c("input", {
                       directives: [
                         {
@@ -69425,7 +69437,52 @@ var render = function () {
                     }),
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-2" }, [
+                  _c("div", { staticClass: "col-sm-5" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filter.role,
+                            expression: "filter.role",
+                          },
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "role", id: "role", placeholder: "Rol" },
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.filter,
+                              "role",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          },
+                        },
+                      },
+                      _vm._l(_vm.roles, function (item, index) {
+                        return _c(
+                          "option",
+                          { key: index, domProps: { value: index } },
+                          [_vm._v(_vm._s(item))]
+                        )
+                      }),
+                      0
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-1" }, [
                     _c(
                       "button",
                       {
@@ -69787,7 +69844,7 @@ var render = function () {
                         "label",
                         {
                           staticClass: "col-sm-2 col-form-label",
-                          attrs: { for: "password" },
+                          attrs: { for: "role" },
                         },
                         [_vm._v("Rol")]
                       ),
@@ -69806,9 +69863,9 @@ var render = function () {
                             ],
                             staticClass: "form-control",
                             class: {
-                              "is-invalid": _vm.form.errors.has("type"),
+                              "is-invalid": _vm.form.errors.has("role"),
                             },
-                            attrs: { name: "type", id: "type" },
+                            attrs: { name: "role", id: "role" },
                             on: {
                               change: function ($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -69838,6 +69895,15 @@ var render = function () {
                           }),
                           0
                         ),
+                        _vm._v(" "),
+                        _vm.form.errors.has("role")
+                          ? _c("div", {
+                              staticClass: "invalid-feedback",
+                              domProps: {
+                                innerHTML: _vm._s(_vm.form.errors.get("role")),
+                              },
+                            })
+                          : _vm._e(),
                       ]),
                     ]),
                   ]),
@@ -69848,6 +69914,11 @@ var render = function () {
                       {
                         staticClass: "btn btn-secondary",
                         attrs: { type: "button", "data-bs-dismiss": "modal" },
+                        on: {
+                          click: function ($event) {
+                            return _vm.resetForm()
+                          },
+                        },
                       },
                       [_vm._v("Cerrar")]
                     ),
@@ -69912,15 +69983,15 @@ var staticRenderFns = [
     return _c("tr", [
       _c("th", [_vm._v("ID")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Name")]),
+      _c("th", [_vm._v("Nombre")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Email")]),
+      _c("th", [_vm._v("Mail")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Role")]),
+      _c("th", [_vm._v("Rol")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Registered At")]),
+      _c("th", [_vm._v("Registrado")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Modify")]),
+      _c("th", { attrs: { width: "10px" } }, [_vm._v("Acciones")]),
     ])
   },
 ]

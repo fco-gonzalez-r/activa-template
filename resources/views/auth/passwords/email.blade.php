@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
@@ -36,6 +36,11 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Send Password Reset Link') }}
                                 </button>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-md-6 offset-md-4">
+                                <a class="small" href="{{ route('login') }}">{{ __('!Recorde mi cuenta!') }}</a>
                             </div>
                         </div>
                     </form>

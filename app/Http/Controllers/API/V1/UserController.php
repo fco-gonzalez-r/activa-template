@@ -16,12 +16,25 @@ class UserController extends BaseController
     }
 
 
+    // $categories = Categories::with('products')->orderBy($order, $by)->whereHas('products', function ($query) use ($searchString){
+    //     $query->where('name', 'like', '%'.$searchString.'%');
+    // })->get();
+
     public function index(){
         $name = \request()->get('name') !== null ? \request()->get('name') : '';
+        $role = \request()->get('role') !== null ? \request()->get('role') : '';
+
+        // dd($role);
 
         $users = User::orderBy('name')
-            ->where('name', 'like', '%'. $name .'%')    
-            ->paginate(5);
+            ->with('roles')
+            ->whereHas('roles', function ($query) use ($role){
+                if ($role !== ''){
+                    $query->where('name', 'like', '%' . $role . '%');
+                }
+            })
+            ->where('name', 'like', '%'. $name .'%')
+            ->paginate(10);
         return $this->sendResponse($users, 'Users list');
     }
 

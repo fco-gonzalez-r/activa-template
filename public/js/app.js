@@ -6053,6 +6053,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -69471,14 +69472,20 @@ var render = function () {
                           },
                         },
                       },
-                      _vm._l(_vm.roles, function (item, index) {
-                        return _c(
-                          "option",
-                          { key: index, domProps: { value: index } },
-                          [_vm._v(_vm._s(item))]
-                        )
-                      }),
-                      0
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Todos"),
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.roles, function (item, index) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: index } },
+                            [_vm._v(_vm._s(item))]
+                          )
+                        }),
+                      ],
+                      2
                     ),
                   ]),
                   _vm._v(" "),

@@ -16,6 +16,7 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <select name="role" v-model="filter.role" id="role" class="form-control" placeholder="Rol">
+                                        <option value="">Todos</option>
                                         <option v-for="(item, index) in roles" :key="index" :value="index">{{ item }}</option>
                                     </select>
                                 </div>

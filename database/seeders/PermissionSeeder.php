@@ -24,21 +24,22 @@ class PermissionSeeder extends Seeder
         ]);
         $superAdmin->assignRole($superAdminRole);
 
-        // $managerRole = Role::create(['name' => 'Manager']);
-        // $manager = User::factory()->create([
-        //     'name' => 'manager',
-        //     'email' => 'manager@mail.com',
-        //     'password' => bcrypt("password")
-        // ]);
-        // $manager->assignRole($managerRole);
 
-        // $employeeRole = Role::create(['name' => 'Employe']);
-        // $employee = User::factory()->create([
-        //     'name' => 'employee',
-        //     'email' => 'employee@mail.com',
-        //     'password' => bcrypt("password")
-        // ]);
-        // $employee->assignRole($employeeRole);
+        $managerRole = Role::create(['guard_name' => 'web', 'name' => 'Manager']);
+        $manager = User::factory()->create([
+            'name' => 'manager',
+            'email' => 'manager@mail.com',
+            'password' => bcrypt("password")
+        ]);
+        $manager->assignRole($managerRole);
+
+        $employeeRole = Role::create(['name' => 'Employe']);
+        $employee = User::factory()->create([
+            'name' => 'employee',
+            'email' => 'employee@mail.com',
+            'password' => bcrypt("password")
+        ]);
+        $employee->assignRole($employeeRole);
 
 
         $permiso1 = Permission::create(['name' => 'rol-listar']);
@@ -57,7 +58,8 @@ class PermissionSeeder extends Seeder
         $permiso12 = Permission::create(['name' => 'usuario-eliminar']);
 
         $superAdminRole->syncPermissions($permiso1, $permiso2, $permiso3, $permiso4, $permiso5, $permiso6, $permiso7, $permiso8, $permiso9, $permiso10, $permiso11, $permiso12);
-
+        $managerRole->syncPermissions($permiso1, $permiso2, $permiso3, $permiso5, $permiso6, $permiso7, $permiso9, $permiso10, $permiso11);
+        $employeeRole->syncPermissions($permiso1, $permiso5, $permiso9);
 
 
         // $superAdminRole->givePermissionTo([

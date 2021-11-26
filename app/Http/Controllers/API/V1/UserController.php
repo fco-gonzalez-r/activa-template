@@ -22,17 +22,18 @@ class UserController extends BaseController
 
     public function index(){
         $name = \request()->get('name') !== null ? \request()->get('name') : '';
-        $role = \request()->get('role') !== null ? \request()->get('role') : '';
+        $role = \request()->get('rol') !== null ? \request()->get('rol') : '';
 
         // dd($role);
 
         $users = User::orderBy('name')
-            ->with('roles')
+            // ->role('Super-Admin')
+            // ->with('roles')
+
             ->whereHas('roles', function ($query) use ($role){
-                if ($role !== ''){
-                    $query->where('name', 'like', '%' . $role . '%');
-                }
+                $query->where('name', 'like', '%' . $role . '%');
             })
+            // ->whereHas("roles", function($q) use ($role){ $q->where('name', 'like', '%' . $role . '%'); })
             ->where('name', 'like', '%'. $name .'%')
             ->paginate(10);
         return $this->sendResponse($users, 'Users list');
